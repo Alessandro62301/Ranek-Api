@@ -40,9 +40,9 @@ export const User = sequelize.define<UserInstance>("User",{
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      set(value: String) {
-        this.setDataValue('name',value)
-      }
+      // set(value: String) {
+      //   this.setDataValue('name',value)
+      // }
     },
     cpf: {
       type: DataTypes.INTEGER,

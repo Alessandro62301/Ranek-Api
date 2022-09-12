@@ -14,15 +14,12 @@ export const user = async (req: Request , res: Response) => {
   }
 }
 export const addUser = async (req: Request , res: Response) => {
+  let {name , email , password , cpf} = req.body;
   try {
-    const usr = User.build({
-      name: "Lucas2 Llalala",
-      email: "lucas22@gmail.com",
-      password: '1234',
-      cpf:11156233344,
-    });
-    await usr.save();
-
+    let newUser = await User.create({name , email , password , cpf});
+    console.log(newUser);
+    res.json({id:newUser.id , email , password , cpf});
+    res.status(201);
   }catch(error){
     console.log('error' + error);
   }

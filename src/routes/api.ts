@@ -9,15 +9,17 @@ const router = Router();
 
 router.get('/user',UserController.user);
 
-router.get('/add/user',UserController.addUser);
+router.post('/add/user',UserController.addUser);
 
 router.get('/update/user',UserController.upUser);
 
-router.get('/product',ProductController.product);
+router.get('/product',ProductController.listProduct);
 
-router.get('/product/:search',ProductController.product);
+router.get('/product/:search',ProductController.listProduct);
 
-router.get('/add/product',ProductController.addProduct);
+router.get('/product/id/:id',ProductController.getProduct);
+
+router.post('/add/product',ProductController.addProduct);
 
 router.get('/update/product',ProductController.upProduct);
 

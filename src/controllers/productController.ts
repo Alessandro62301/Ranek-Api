@@ -2,8 +2,7 @@ import { Request , Response } from "express";
 import { Op } from 'sequelize';
 import { Product } from '../models/product';
 
-export const product = async (req: Request , res: Response) => {
-
+export const listProduct = async (req: Request , res: Response) => {
   try {
       let prod = await Product.findAll({
         where: { 
@@ -23,18 +22,24 @@ export const product = async (req: Request , res: Response) => {
     console.log('error' + error);
   }
 }
+export const getProduct = async (req: Request , res: Response) => {
+  let { id } = req.params;
+  try {
+      let prod = await Product.findByPk(id);
+      res.json(prod);
+  }catch(error){
+    console.log('error' + error);
+  }
+}
 
 export const addProduct = async (req: Request , res: Response) => {
+  let {id_user , title , description , value} = req.body;
   try {
-      const prod = Product.build({
-        id_user: 2,
-        title: 'Inserida com Sequelize',
-        description: 'lalalalla',
-        value: 124
-      });
-      await prod.save();
-      console.log("Product Add");
-      
+      let newProduct = await Product.create({id_user , title , description , value});
+      console.log(newProduct);
+      res.json({id:newProduct.id , id_user , title , description , value});
+      res.status(201);
+
   }catch(error){
     console.log('error' + error);
   }
