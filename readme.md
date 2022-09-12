@@ -12,9 +12,10 @@ Consulte **[Implantação](#-implanta%C3%A7%C3%A3o)** para saber como implantar 
 
 De que coisas você precisa para instalar o software e como instalá-lo?
 
-```
-Dar exemplos
-```
+* [NodeJs v16.14.2](https://nodejs.org/en/)
+
+* [Mysql](https://www.mysql.com/downloads/)
+
 
 ### 🔧 Instalação
 
@@ -23,13 +24,22 @@ Uma série de exemplos passo-a-passo que informam o que você deve executar para
 Diga como essa etapa será:
 
 ```
-Dar exemplos
+$ npm install
 ```
 
-E repita:
+```
+Criar arquivo .env no root do projeto com as variaveis de ambiente:
+
+PORT=4000
+MYSQL_DB=
+MYSQL_USER=
+MYSQL_PASSWORD=
+MYSQL_PORT=3306
 
 ```
-Até finalizar
+
+```
+$ npm run start-dev
 ```
 
 Termine com um exemplo de como obter dados do sistema ou como usá-los para uma pequena demonstração.
@@ -64,7 +74,7 @@ Mencione as ferramentas que você usou para criar seu projeto
 
 * [NodeJs](https://nodejs.org/en/) - Framework Javascript
 * [Express](https://expressjs.com/) - Web framework for Node.js
-* [Sequelize](https://sequelize.org/) - 
+* [Sequelize](https://sequelize.org/) - Model Querying
 * [TypeScript](https://www.typescriptlang.org/) - JavaScript with syntax for types.
 
 <!-- ## 🖇️ Colaborando
