@@ -1,7 +1,18 @@
 {
+  "name": "ranek-api",
+  "version": "1.0.0",
+  "description": "",
   "scripts": {
     "start-dev": "nodemon -e ts,json src/server.ts"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alessandro62301/Ranek-Api "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
