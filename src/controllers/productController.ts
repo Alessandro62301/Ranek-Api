@@ -46,23 +46,19 @@ export const addProduct = async (req: Request , res: Response) => {
 }
 
 export const upProduct = async (req: Request , res: Response) => {
-  try {
+  let {id} = req.params;
+  let { title , description , value} = req.body;
 
-    let results = await Product.findAll({
-      where: {
-        id:1
-      }   
-    });
-    if(results.length > 0){
-      let product = results[0];
-      product.title = 'title Llalala';
-      await product.save();
-    }
-      console.log("Product Updated");
-      
-  }catch(error){
-    console.log('error' + error);
+  let results = await Product.findByPk(id);
+  if(results){
+    results.title = title;
+    results.description = description;
+    results.value = value;
+      await results.save();
+  }else{
+    res.json({error:'frase nao encontrada'})
   }
+    console.log("Product Updated");
 }
 
 export const RemoveProduct = async (req: Request , res: Response) => {

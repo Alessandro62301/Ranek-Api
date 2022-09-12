@@ -16,7 +16,12 @@ De que coisas você precisa para instalar o software e como instalá-lo?
 
 * [Mysql](https://www.mysql.com/downloads/)
 
-
+```
+$ npm install -g nodemon
+```
+```
+$ npm install -g ts-node
+```
 ### 🔧 Instalação
 
 Uma série de exemplos passo-a-passo que informam o que você deve executar para ter um ambiente de desenvolvimento em execução.

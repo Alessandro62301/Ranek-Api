@@ -21,7 +21,7 @@ router.get('/product/id/:id',ProductController.getProduct);
 
 router.post('/add/product',ProductController.addProduct);
 
-router.get('/update/product',ProductController.upProduct);
+router.put('/update/product/:id',ProductController.upProduct);
 
 router.get('/remove/product',ProductController.RemoveProduct);
 
