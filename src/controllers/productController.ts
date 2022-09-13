@@ -1,6 +1,8 @@
+import { unlink } from 'fs/promises';
 import { Request , Response } from 'express';
 import { Op } from 'sequelize';
 import { Product } from '../models/product';
+import { Image } from '../models/image';
 import sharp from 'sharp';
 
 export const listProduct = async (req: Request , res: Response) => {
@@ -70,17 +72,30 @@ export const deleteProduct = async (req: Request , res: Response) => {
 
 export const uploadImages = async (req: Request , res: Response) => {
   // console.log( req.files );
-  if(req.file) {
-    await sharp(req.file.path)
-        .resize(400,600)
-        .toFormat('jpeg')
-        .toFile(`./public/media/${req.file.filename}.jpg`);
-    
-    console.log({ image: `localhost:4000/public/media/${req.file.filename}.jpg`});
-  } else {
-      res.status(400);
-      res.json({error : 'Arquivo Invalido'});
-  }
+
+  let result = await Product.findByPk(req.body.id_product);
+
+    if(req.file && result) {
+
+      const filename = `${req.file.filename}.jpg`;
+      
+      let newProduct = await Image.create({id_product: req.body.id_product  , name : filename});
+      console.log({id:newProduct.id , id_product: newProduct.id_product, name: newProduct.name});
+
+      await sharp(req.file.path)
+          .resize(400,600)
+          .toFormat('jpeg')
+          .toFile(`./public/media/${filename}`);
+      
+      await unlink(req.file.path);
+  
+      // res.json({ image: `${filename}`});
+      console.log({ image: `localhost:4000/public/media/${filename}`});
+    } else {
+        res.status(400);
+        res.json({error : 'Arquivo Invalido'});
+    }
+  
 
   res.json({});
 }
