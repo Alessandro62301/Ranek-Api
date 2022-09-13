@@ -1,29 +1,44 @@
 import { Request , Response } from "express";
-import { Op } from 'sequelize';
 import { User } from '../models/user';
 
+export const register = async (req: Request , res: Response) => {
 
-export const user = async (req: Request , res: Response) => {
-  try {
-      let results = await User.findAll({
-      attributes: {exclude: ['password']},
+if( req.body.name && req.body.email && req.body.password && req.body.cpf ) {
+  let { name ,email, password , cpf } = req.body;
+
+  let hasUser = await User.findOne({where: { email }});
+  if(!hasUser) {
+      let newUser = await User.create({name ,email, password , cpf });
+
+      res.status(201);
+      res.json({ id: newUser.id });
+  } else {
+      res.json({ error: 'E-mail já existe.' });
+  }
+}
+
+res.json({ error: 'Preencha os Campos' });
+}
+
+export const login = async (req: Request , res: Response) => {
+  
+  if( req.body.email && req.body.password ) {
+    let email: string = req.body.email;
+    let password: string = req.body.password;
+
+    let user = await User.findOne({ 
+        where: { email, password }
     });
-    res.json(results);
-  }catch(error){
-    console.log('error' + error);
-  }
+
+    if(user) {
+        res.json({ status: true });
+        return;
+    }
 }
-export const addUser = async (req: Request , res: Response) => {
-  let {name , email , password , cpf} = req.body;
-  try {
-    let newUser = await User.create({name , email , password , cpf});
-    console.log(newUser);
-    res.json({id:newUser.id , email , password , cpf});
-    res.status(201);
-  }catch(error){
-    console.log('error' + error);
-  }
+
+res.json({ status: false });
 }
+
 
 
 export const upUser = async (req: Request , res: Response) => {

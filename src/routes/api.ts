@@ -22,9 +22,9 @@ const upload = multer({
 const router = Router();
 
 
-router.get('/user',UserController.user);
+router.post('/login',UserController.login);
 
-router.post('/add/user',UserController.addUser);
+router.post('/register',UserController.register);
 
 router.get('/update/user',UserController.upUser);
 
