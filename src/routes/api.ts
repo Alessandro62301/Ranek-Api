@@ -21,9 +21,9 @@ router.get('/product/id/:id',ProductController.getProduct);
 
 router.post('/add/product',ProductController.addProduct);
 
-router.put('/update/product/:id',ProductController.upProduct);
+router.put('/update/product',ProductController.updateProduct);
 
-router.get('/remove/product',ProductController.RemoveProduct);
+router.delete('/delete/product',ProductController.deleteProduct);
 
 
 

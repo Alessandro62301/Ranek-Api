@@ -17,7 +17,6 @@ export const listProduct = async (req: Request , res: Response) => {
          }
       });
       res.json(prod);
-
   }catch(error){
     console.log('error' + error);
   }
@@ -45,9 +44,8 @@ export const addProduct = async (req: Request , res: Response) => {
   }
 }
 
-export const upProduct = async (req: Request , res: Response) => {
-  let {id} = req.params;
-  let { title , description , value} = req.body;
+export const updateProduct = async (req: Request , res: Response) => {
+  let { id ,title , description , value} = req.body;
 
   let results = await Product.findByPk(id);
   if(results){
@@ -61,21 +59,9 @@ export const upProduct = async (req: Request , res: Response) => {
     console.log("Product Updated");
 }
 
-export const RemoveProduct = async (req: Request , res: Response) => {
-  try {
-    let results = await Product.findAll({
-      where: {
-        id:2
-      }   
-    });
-    if(results.length > 0){
-      let product = results[0];
-      
-      await product.destroy();
-    }
-    console.log(`Item Removido!`);
-    
-  }catch(error){
-    console.log('error' + error);
-  }
+export const deleteProduct = async (req: Request , res: Response) => {
+  let { id } = req.body;
+
+  await Product.destroy({where: { id }});
+  res.json({})
 }
