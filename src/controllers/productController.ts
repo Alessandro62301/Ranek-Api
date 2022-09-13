@@ -65,3 +65,11 @@ export const deleteProduct = async (req: Request , res: Response) => {
   await Product.destroy({where: { id }});
   res.json({})
 }
+
+
+export const uploadImages = async (req: Request , res: Response) => {
+  console.log( req.files );
+  
+
+  res.json({});
+}
