@@ -81,6 +81,7 @@ Mencione as ferramentas que você usou para criar seu projeto
 * [Express](https://expressjs.com/) - Web framework for Node.js
 * [Sequelize](https://sequelize.org/) - Model Querying
 * [TypeScript](https://www.typescriptlang.org/) - JavaScript with syntax for types.
+* [Multer](https://www.npmjs.com/package/multer) - Multer used for file upload.
 
 <!-- ## 🖇️ Colaborando
 
@@ -90,7 +91,8 @@ Por favor, leia o [COLABORACAO.md](https://gist.github.com/usuario/linkParaInfoS
 
 Nós usamos [SemVer](http://semver.org/) para controle de versão. Para as versões disponíveis, observe as [tags neste repositório](https://github.com/suas/tags/do/projeto).  -->
 
-## ✒️ Autores
+## ✒️ Autoresusada para upload de arquivos
+
 
 Mencione todos aqueles que ajudaram a levantar o projeto desde o seu início
 
