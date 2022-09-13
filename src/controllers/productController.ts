@@ -71,7 +71,6 @@ export const deleteProduct = async (req: Request , res: Response) => {
 
 
 export const uploadImages = async (req: Request , res: Response) => {
-  // console.log( req.files );
 
   let result = await Product.findByPk(req.body.id_product);
 
@@ -89,13 +88,9 @@ export const uploadImages = async (req: Request , res: Response) => {
       
       await unlink(req.file.path);
   
-      // res.json({ image: `${filename}`});
-      console.log({ image: `localhost:4000/public/media/${filename}`});
+      res.json({ image: `localhost:4000/public/media/${filename}`});
     } else {
         res.status(400);
         res.json({error : 'Arquivo Invalido'});
     }
-  
-
-  res.json({});
 }

@@ -8,12 +8,6 @@ const storageConfig = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, './tmp');
   },
-  // filename: (req, file, cb) => {
-  //   let randomName = Math.floor(Math.random()* 9999999);
-  //   let type  = file.mimetype.split("/");
-  //   cb(null, `${randomName+Date.now()}.${type[1]}`);
-  // }
-
 });
 
 const upload = multer({

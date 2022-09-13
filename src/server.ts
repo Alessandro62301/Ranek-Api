@@ -13,8 +13,6 @@ server.use(cors({
   origin: '*',
 }));
 
-
-
 server.use('/public', express.static(path.join(__dirname, '../public')));
 server.use(express.urlencoded({extended : true}));
 
@@ -36,5 +34,5 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   }
 }
 server.use(errorHandler)
-
+ 
 server.listen(process.env.PORT);
