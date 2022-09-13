@@ -8,11 +8,11 @@ const storageConfig = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, './tmp');
   },
-  filename: (req, file, cb) => {
-    let randomName = Math.floor(Math.random()* 9999999);
-    let type  = file.mimetype.split("/");
-    cb(null, `${randomName+Date.now()}.${type[1]}`);
-  }
+  // filename: (req, file, cb) => {
+  //   let randomName = Math.floor(Math.random()* 9999999);
+  //   let type  = file.mimetype.split("/");
+  //   cb(null, `${randomName+Date.now()}.${type[1]}`);
+  // }
 
 });
 
@@ -46,7 +46,7 @@ router.put('/update/product',ProductController.updateProduct);
 
 router.delete('/delete/product',ProductController.deleteProduct);
 
-router.post('/upload', upload.array('images',5), ProductController.uploadImages);
+router.post('/upload', upload.single('images'), ProductController.uploadImages);
 
 
 

@@ -1,6 +1,7 @@
-import { Request , Response } from "express";
+import { Request , Response } from 'express';
 import { Op } from 'sequelize';
 import { Product } from '../models/product';
+import sharp from 'sharp';
 
 export const listProduct = async (req: Request , res: Response) => {
   try {
@@ -54,7 +55,7 @@ export const updateProduct = async (req: Request , res: Response) => {
     results.value = value;
       await results.save();
   }else{
-    res.json({error:'frase nao encontrada'})
+    res.json({error:'Error'})
   }
     console.log("Product Updated");
 }
@@ -68,8 +69,18 @@ export const deleteProduct = async (req: Request , res: Response) => {
 
 
 export const uploadImages = async (req: Request , res: Response) => {
-  console.log( req.files );
-  
+  // console.log( req.files );
+  if(req.file) {
+    await sharp(req.file.path)
+        .resize(400,600)
+        .toFormat('jpeg')
+        .toFile(`./public/media/${req.file.filename}.jpg`);
+    
+    console.log({ image: `localhost:4000/public/media/${req.file.filename}.jpg`});
+  } else {
+      res.status(400);
+      res.json({error : 'Arquivo Invalido'});
+  }
 
   res.json({});
 }
