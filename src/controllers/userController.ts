@@ -39,7 +39,7 @@ res.json({ status: false });
 
 
 
-export const upUser = async (req: Request , res: Response) => {
+export const updateUser = async (req: Request , res: Response) => {
   try {
     let results = await User.findAll({
       attributes: {exclude: ['password']},

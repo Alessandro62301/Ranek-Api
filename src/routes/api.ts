@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import multer from 'multer';
-// import * as ApiController from '../controllers/apiController'
-import * as ProductController from '../controllers/productController'
-import * as UserController from '../controllers/userController'
+// import * as ApiController from '../controllers/apiController';
+import * as ProductController from '../controllers/productController';
+import * as UserController from '../controllers/userController';
+
+import { Auth } from '../middlewares/auth';
 
 const storageConfig = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -26,7 +28,7 @@ router.post('/login',UserController.login);
 
 router.post('/register',UserController.register);
 
-router.get('/update/user',UserController.upUser);
+router.get('/update/user', Auth.private ,UserController.updateUser);
 
 router.get('/product',ProductController.listProduct);
 
@@ -34,13 +36,13 @@ router.get('/product/:search',ProductController.listProduct);
 
 router.get('/product/id/:id',ProductController.getProduct);
 
-router.post('/add/product',ProductController.addProduct);
+router.post('/add/product', Auth.private, ProductController.addProduct);
 
-router.put('/update/product',ProductController.updateProduct);
+router.put('/update/product', Auth.private ,ProductController.updateProduct);
 
-router.delete('/delete/product',ProductController.deleteProduct);
+router.delete('/delete/product', Auth.private ,ProductController.deleteProduct);
 
-router.post('/upload', upload.single('images'), ProductController.uploadImages);
+router.post('/upload', Auth.private , upload.single('images'),  ProductController.uploadImages);
 
 
 
