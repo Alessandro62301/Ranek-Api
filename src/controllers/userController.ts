@@ -14,11 +14,19 @@ if( req.body.name && req.body.email && req.body.password && req.body.cpf ) {
   if(!hasUser) {
       let newUser = await User.create({name ,email, password , cpf });
 
+      const token = JWT.sign(
+        {id: newUser.id, email: newUser.email,},
+        process.env.JWT_SECRET_KEY as string,
+      );  
       res.status(201);
-      res.json({ id: newUser.id });
+      res.json({ id: newUser.id , token});
+      return;
+
   } else {
-      res.json({ error: 'E-mail já existe.' });
+      res.json({ error: 'Usuario Já Cadastrado.' });
   }
+} else {
+  res.json({ error: 'Preencha os Campos' });
 }
 }
 
