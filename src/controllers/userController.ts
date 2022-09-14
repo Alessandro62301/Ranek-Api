@@ -1,5 +1,9 @@
 import { Request , Response } from "express";
 import { User } from '../models/user';
+import JWT from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const register = async (req: Request , res: Response) => {
 
@@ -29,7 +33,12 @@ export const login = async (req: Request , res: Response) => {
     });
 
     if(user) {
-        res.json({ status: true });
+      const token = JWT.sign(
+          {id: user.id, email: user.email,},
+          process.env.JWT_SECRET_KEY as string,
+        );  
+
+        res.json({ status: true, token});
         return;
     }
 }

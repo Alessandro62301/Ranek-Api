@@ -83,6 +83,8 @@ Mencione as ferramentas que você usou para criar seu projeto
 * [TypeScript](https://www.typescriptlang.org/) - JavaScript with syntax for types.
 * [Multer](https://www.npmjs.com/package/multer) - Multer used for file upload.
 * [Sharp](https://www.npmjs.com/package/sharp) - Manipulate Images.
+* [JsonWebToken](https://www.npmjs.com/package/jsonwebtoken) - Manipulate Images.
+
 
 <!-- ## 🖇️ Colaborando
 
