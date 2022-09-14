@@ -35,16 +35,17 @@ export const getProduct = async (req: Request , res: Response) => {
 }
 
 export const addProduct = async (req: Request , res: Response) => {
-  let {id_user , title , description , value} = req.body;
-  try {
-      let newProduct = await Product.create({id_user , title , description , value});
-      console.log(newProduct);
-      res.json({id:newProduct.id , id_user , title , description , value});
-      res.status(201);
 
-  }catch(error){
-    console.log('error' + error);
-  }
+if( req.body.id_user && req.body.title && req.body.description && req.body.value ) {
+  let {id_user , title , description , value} = req.body;
+
+  let newProduct = await Product.create({id_user , title , description , value});
+
+  res.status(201);
+  res.json({id:newProduct.id , id_user , title , description , value});
+  }else {
+    res.json({ error: 'Preencha os Campos' });
+  } 
 }
 
 export const updateProduct = async (req: Request , res: Response) => {

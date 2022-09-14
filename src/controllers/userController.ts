@@ -16,8 +16,6 @@ if( req.body.name && req.body.email && req.body.password && req.body.cpf ) {
       res.json({ error: 'E-mail já existe.' });
   }
 }
-
-res.json({ error: 'Preencha os Campos' });
 }
 
 export const login = async (req: Request , res: Response) => {
