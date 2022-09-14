@@ -1,6 +1,6 @@
 import { unlink } from 'fs/promises';
 import { Request , Response } from 'express';
-import { Op } from 'sequelize';
+import { Op, where } from 'sequelize';
 import { Product } from '../models/product';
 import { Image } from '../models/image';
 import sharp from 'sharp';
@@ -34,15 +34,25 @@ export const getProduct = async (req: Request , res: Response) => {
   }
 }
 
+export const getUserProducts = async (req: Request , res: Response) => {    
+    let prod = await Product.findAll({
+      attributes: {exclude: ['id_user']},
+      where: {
+        id_user: res.locals.user.id
+      },
+    });
+    res.json(prod);   
+}
+
 export const addProduct = async (req: Request , res: Response) => {
 
-if( req.body.id_user && req.body.title && req.body.description && req.body.value ) {
-  let {id_user , title , description , value} = req.body;
+if( res.locals.user.id && req.body.title && req.body.description && req.body.value ) {
+  let {title , description , value} = req.body;
 
-  let newProduct = await Product.create({id_user , title , description , value});
+  let newProduct = await Product.create({id_user: res.locals.user.id , title , description , value});
 
   res.status(201);
-  res.json({id:newProduct.id , id_user , title , description , value});
+  res.json({id:newProduct.id , is_user: res.locals.user.id , title , description , value});
   }else {
     res.json({ error: 'Preencha os Campos' });
   } 
@@ -51,12 +61,19 @@ if( req.body.id_user && req.body.title && req.body.description && req.body.value
 export const updateProduct = async (req: Request , res: Response) => {
   let { id ,title , description , value} = req.body;
 
-  let results = await Product.findByPk(id);
+  let results = await Product.findOne({
+    where: {
+      id: id,
+      id_user: res.locals.user.id
+    }
+  });
   if(results){
     results.title = title;
     results.description = description;
     results.value = value;
-      await results.save();
+    await results.save();
+    res.status(201);
+    res.json({status: true});
   }else{
     res.json({error:'Error'})
   }
@@ -65,11 +82,14 @@ export const updateProduct = async (req: Request , res: Response) => {
 
 export const deleteProduct = async (req: Request , res: Response) => {
   let { id } = req.body;
-
-  await Product.destroy({where: { id }});
-  res.json({})
+  const status = await Product.destroy({
+    where: {
+      id: id,
+      id_user: res.locals.user.id
+    }
+  });
+  res.json({status})
 }
-
 
 export const uploadImages = async (req: Request , res: Response) => {
 

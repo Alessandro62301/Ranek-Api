@@ -28,7 +28,7 @@ router.post('/login',UserController.login);
 
 router.post('/register',UserController.register);
 
-router.get('/update/user', Auth.private ,UserController.updateUser);
+router.get('/updateuser', Auth.private ,UserController.updateUser);
 
 router.get('/product',ProductController.listProduct);
 
@@ -36,11 +36,13 @@ router.get('/product/:search',ProductController.listProduct);
 
 router.get('/product/id/:id',ProductController.getProduct);
 
-router.post('/add/product', Auth.private, ProductController.addProduct);
+router.post('/getuserproducts', Auth.private, ProductController.getUserProducts);
 
-router.put('/update/product', Auth.private ,ProductController.updateProduct);
+router.post('/addproduct', Auth.private, ProductController.addProduct);
 
-router.delete('/delete/product', Auth.private ,ProductController.deleteProduct);
+router.put('/updateproduct', Auth.private ,ProductController.updateProduct);
+
+router.delete('/deleteproduct', Auth.private ,ProductController.deleteProduct);
 
 router.post('/upload', Auth.private , upload.single('images'),  ProductController.uploadImages);
 

@@ -42,7 +42,7 @@ export const login = async (req: Request , res: Response) => {
 
     if(user) {
       const token = JWT.sign(
-          {id: user.id, email: user.email,},
+          {id: user.id, email: user.email, name: user.name},
           process.env.JWT_SECRET_KEY as string,
         );  
 
@@ -55,9 +55,7 @@ res.json({ status: false });
 }
 
 
-
 export const updateUser = async (req: Request , res: Response) => {
-  try {
     let results = await User.findAll({
       attributes: {exclude: ['password']},
       where: {
@@ -71,8 +69,5 @@ export const updateUser = async (req: Request , res: Response) => {
     }
     console.log("User Updated");
 
-  }catch(error){
-    console.log('error' + error);
-  }
 }
 
