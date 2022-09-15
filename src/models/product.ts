@@ -1,5 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../instances/mysql';  
+import { Image } from '../models/image';
 
 export interface ProductInstance extends Model {
   id: number;
@@ -29,7 +30,8 @@ export const Product = sequelize.define<ProductInstance>("Product",{
     value: {
       type: DataTypes.FLOAT,
       allowNull: false
-    },  
+    },
+
   },
     {
       tableName: 'products',

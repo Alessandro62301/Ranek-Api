@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express"
-import { User } from '../models/user';
 import JWT from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
@@ -27,14 +26,13 @@ export const Auth = {
                 }
             }
         }
-
         if(success) {
             console.log('Autorizado');
             // res.json({ status: true});
             next();
         } else {
             res.status(403) // Not Authorized
-            // res.json({ error: 'Nao autorizado'});
+            res.json({ error: 'Nao autorizado'});
         }
 
     }

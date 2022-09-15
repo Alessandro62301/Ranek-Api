@@ -1,37 +1,33 @@
 import { unlink } from 'fs/promises';
 import { Request , Response } from 'express';
-import { Op, where } from 'sequelize';
+import { Op } from 'sequelize';
 import { Product } from '../models/product';
 import { Image } from '../models/image';
 import sharp from 'sharp';
+// import { sequelize } from '../instances/mysql';  
+
+
 
 export const listProduct = async (req: Request , res: Response) => {
-  try {
-      let prod = await Product.findAll({
-        where: { 
-          [Op.or]: {
-            title: {
-              [Op.like]: req.params.search==undefined ? '%' : '%'+req.params.search+'%'
-            },
-            description: {
-              [Op.like]: req.params.search==undefined ? '%' : '%'+req.params.search+'%'
-            }
-          } 
-         }
-      });
-      res.json(prod);
-  }catch(error){
-    console.log('error' + error);
-  }
+  let products = await Product.findAll({
+    where: { 
+      [Op.or]: {
+        title: {
+          [Op.like]: req.params.search==undefined ? '%' : '%'+req.params.search+'%'
+        },
+        description: {
+          [Op.like]: req.params.search==undefined ? '%' : '%'+req.params.search+'%'
+        }
+      } 
+     },
+  });
+  res.json(products);
 }
+
 export const getProduct = async (req: Request , res: Response) => {
   let { id } = req.params;
-  try {
       let prod = await Product.findByPk(id);
       res.json(prod);
-  }catch(error){
-    console.log('error' + error);
-  }
 }
 
 export const getUserProducts = async (req: Request , res: Response) => {    
@@ -41,7 +37,7 @@ export const getUserProducts = async (req: Request , res: Response) => {
         id_user: res.locals.user.id
       },
     });
-    res.json(prod);   
+    res.json(prod);
 }
 
 export const addProduct = async (req: Request , res: Response) => {
