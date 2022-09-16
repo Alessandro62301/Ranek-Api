@@ -5,7 +5,6 @@ import { Op } from 'sequelize';
 import { Product } from '../models/product';
 import { Image } from '../models/image';
 import sharp from 'sharp';
-// import { sequelize } from '../instances/mysql';  
 
 
 
@@ -21,9 +20,20 @@ export const listProduct = async (req: Request , res: Response) => {
 
   let arrayProduct: item[] = [];
   
-  let products = await Product.findAll({});
+  let products = await Product.findAll({
+    where: { 
+      [Op.or]: {
+        title: {
+          [Op.like]: req.params.search==undefined ? '%' : '%'+req.params.search+'%'
+        },
+        description: {
+          [Op.like]: req.params.search==undefined ? '%' : '%'+req.params.search+'%'
+        }
+      } 
+     },
+  });
 
-  products.forEach( async (elem , i) => {
+  products.forEach( async (elem ) => {
 
     let image = await Image.findAll({
           attributes: {exclude: ['id_product']},
@@ -49,17 +59,6 @@ export const listProduct = async (req: Request , res: Response) => {
 
 
 }
-export const getImages = async (id: number) => {
-  let result = await Image.findAll({where: {id_product : id}});
-  return result;
-}
-
-export const getImage = async (req: Request , res: Response) => {
-    let image = await Image.findAll({where: {id_product : 15}});
-    res.json(image);
-}
-
-
 
 export const getProduct = async (req: Request , res: Response) => {
   let { id } = req.params;

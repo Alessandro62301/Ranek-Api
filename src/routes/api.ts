@@ -38,8 +38,6 @@ router.get('/product/id/:id',ProductController.getProduct);
 
 router.post('/getuserproducts', Auth.private, ProductController.getUserProducts);
 
-router.get('/getimages', ProductController.getImage);
-
 router.post('/addproduct', Auth.private, ProductController.addProduct);
 
 router.put('/updateproduct', Auth.private ,ProductController.updateProduct);
