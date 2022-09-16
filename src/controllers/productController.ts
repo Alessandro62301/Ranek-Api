@@ -1,3 +1,4 @@
+import { ImageInstance } from './../models/image';
 import { unlink } from 'fs/promises';
 import { Request , Response } from 'express';
 import { Op } from 'sequelize';
@@ -9,20 +10,56 @@ import sharp from 'sharp';
 
 
 export const listProduct = async (req: Request , res: Response) => {
-  let products = await Product.findAll({
-    where: { 
-      [Op.or]: {
-        title: {
-          [Op.like]: req.params.search==undefined ? '%' : '%'+req.params.search+'%'
-        },
-        description: {
-          [Op.like]: req.params.search==undefined ? '%' : '%'+req.params.search+'%'
-        }
-      } 
-     },
-  });
-  res.json(products);
+  type item = {
+    id: number;
+    id_user:number,
+    title: string,
+    description: string,
+    value: number,
+    images: Array<ImageInstance>,
+  };
+
+  let arrayProduct: item[] = [];
+  
+  let products = await Product.findAll({});
+
+  products.forEach( async (elem , i) => {
+
+    let image = await Image.findAll({
+          attributes: {exclude: ['id_product']},
+          where: {id_product : elem.id},
+        });
+
+    arrayProduct.push({
+      id: elem.id,
+      id_user: elem.id_user,
+      title: elem.title,
+      description: elem.description,
+      value: elem.value,
+      images: image
+    })
+  })
+
+   let get = setInterval(() => {
+    if(arrayProduct.length === products.length){
+      res.json(arrayProduct);
+      clearInterval(get);
+    }
+}, 10)
+
+
 }
+export const getImages = async (id: number) => {
+  let result = await Image.findAll({where: {id_product : id}});
+  return result;
+}
+
+export const getImage = async (req: Request , res: Response) => {
+    let image = await Image.findAll({where: {id_product : 15}});
+    res.json(image);
+}
+
+
 
 export const getProduct = async (req: Request , res: Response) => {
   let { id } = req.params;
