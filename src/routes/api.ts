@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
-// import * as ApiController from '../controllers/apiController';
+import * as ApiController from '../controllers/apiController';
 import * as ProductController from '../controllers/productController';
 import * as UserController from '../controllers/userController';
 
@@ -28,6 +28,8 @@ router.post('/login',UserController.login);
 
 router.post('/register',UserController.register);
 
+router.post('/validate', Auth.private , ApiController.validadeToken);
+
 router.get('/updateuser', Auth.private ,UserController.updateUser);
 
 router.get('/product',ProductController.listProduct);
@@ -36,7 +38,7 @@ router.get('/product/:search',ProductController.listProduct);
 
 router.get('/product/id/:id',ProductController.getProduct);
 
-router.post('/getuserproducts', Auth.private, ProductController.getUserProducts);
+router.get('/getuserproducts', Auth.private, ProductController.getUserProducts);
 
 router.post('/addproduct', Auth.private, ProductController.addProduct);
 

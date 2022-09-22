@@ -31,11 +31,12 @@ if( req.body.name && req.body.email && req.body.password && req.body.cpf ) {
 }
 
 export const login = async (req: Request , res: Response) => {
+  console.log(req.body);
   
   if( req.body.email && req.body.password ) {
     let email: string = req.body.email;
     let password: string = req.body.password;
-
+    
     let user = await User.findOne({ 
         where: { email, password }
     });
@@ -45,13 +46,14 @@ export const login = async (req: Request , res: Response) => {
           {id: user.id, email: user.email, name: user.name},
           process.env.JWT_SECRET_KEY as string,
         );  
-
         res.json({ status: true, token});
         return;
     }
+} else {
+  // res.status(500);
+  res.json({ status: false });
 }
-
-res.json({ status: false });
+  
 }
 
 

@@ -56,8 +56,6 @@ export const listProduct = async (req: Request , res: Response) => {
       clearInterval(get);
     }
 }, 10)
-
-
 }
 
 export const getProduct = async (req: Request , res: Response) => {
@@ -140,10 +138,12 @@ export const uploadImages = async (req: Request , res: Response) => {
           .toFile(`./public/media/${filename}`);
       
       await unlink(req.file.path);
-  
+      
       res.json({ image: `localhost:4000/public/media/${filename}`});
     } else {
         res.status(400);
         res.json({error : 'Arquivo Invalido'});
     }
+
+
 }
