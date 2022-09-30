@@ -200,7 +200,13 @@ export const listSoldProduct = async (req: Request, res: Response) => {
     }
   });
 
-  res.json(results)
+  let array: number[] = [];
+
+  results.forEach(async (elem) => {
+    array.push(elem.id);
+  })
+
+  listProductArrayId(array, res);
 }
 
 export const listBoughtProduct = async (req: Request, res: Response) => {
