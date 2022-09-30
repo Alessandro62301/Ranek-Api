@@ -67,4 +67,4 @@ export const User = sequelize.define<UserInstance>("User", {
     timestamps: false
   });
 
-User.sync({ alter: true })
+// User.sync({ alter: true })
