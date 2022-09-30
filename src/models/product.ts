@@ -8,6 +8,7 @@ export interface ProductInstance extends Model {
   title: string;
   description: string;
   value: number;
+  sold: number;
 }
 
 export const Product = sequelize.define<ProductInstance>("Product",{
@@ -31,9 +32,14 @@ export const Product = sequelize.define<ProductInstance>("Product",{
       type: DataTypes.FLOAT,
       allowNull: false
     },
+    sold: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
 
   },
     {
       tableName: 'products',
       timestamps: false 
 });
+// Product.sync({ alter: true })
