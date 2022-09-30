@@ -25,14 +25,6 @@ export const User = sequelize.define<UserInstance>("User",{
         this.setDataValue('name',value.toLowerCase())
       }
     },
-
-    firstLetterOfName : {
-      type: DataTypes.VIRTUAL,
-      get(){
-        let name : String = this.getDataValue('name');
-        return name.charAt(0);
-      }
-    },
     email: {
       type: DataTypes.STRING,
       allowNull: false
@@ -40,16 +32,33 @@ export const User = sequelize.define<UserInstance>("User",{
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      // set(value: String) {
-      //   this.setDataValue('name',value)
-      // }
     },
     cpf: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },  
+      type: DataTypes.STRING,
+    }, 
+    zipcode: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    }, 
+    stret: {
+      type: DataTypes.STRING,
+    }, 
+    number: {
+      type: DataTypes.STRING,
+    }, 
+    district: {
+      type: DataTypes.STRING,
+    }, 
+    city: {
+      type: DataTypes.STRING,
+    }, 
+    state : {
+      type: DataTypes.STRING,
+    }, 
   },
     {
       tableName: 'users',
       timestamps: false 
 });
+
+  User.sync({ alter: true })
