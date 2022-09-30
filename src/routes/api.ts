@@ -49,5 +49,4 @@ router.delete('/deleteproduct', Auth.private ,ProductController.deleteProduct);
 router.post('/upload', Auth.private , upload.single('images'),  ProductController.uploadImages);
 
 
-
 export default router;

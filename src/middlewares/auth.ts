@@ -10,29 +10,29 @@ export const Auth = {
         let success = false;
         let user;
 
-        if(req.headers.authorization){
-            
+        if (req.headers.authorization) {
+
             const [authType, token] = req.headers.authorization.split(' ');
-            if(authType === 'Bearer') {
-                try{
+            if (authType === 'Bearer') {
+                try {
                     user = JWT.verify(
                         token,
                         process.env.JWT_SECRET_KEY as string
                     );
                     res.locals.user = user;
                     success = true;
-                }catch(err){
+                } catch (err) {
                     console.log('Jwt Invalido');
                 }
             }
         }
-        if(success) {
+        if (success) {
             console.log('Autorizado');
             // res.json({ status: true});
             next();
         } else {
             res.status(403) // Not Authorized
-            res.json({ error: 'Nao autorizado'});
+            res.json({ error: 'Nao autorizado' });
         }
 
     }
