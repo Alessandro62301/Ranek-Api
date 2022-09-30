@@ -7,7 +7,6 @@ import { Image } from '../models/image';
 import sharp from 'sharp';
 
 
-
 export const listProduct = async (req: Request , res: Response) => {
   type item = {
     id: number;
@@ -121,7 +120,7 @@ export const deleteProduct = async (req: Request , res: Response) => {
   res.json({status})
 }
 
-export const uploadImages = async (req: Request , res: Response) => {
+export const uploadImage = async (req: Request , res: Response) => {
 
   let result = await Product.findByPk(req.body.id_product);
 
@@ -144,6 +143,31 @@ export const uploadImages = async (req: Request , res: Response) => {
         res.status(400);
         res.json({error : 'Arquivo Invalido'});
     }
+}
+export const uploadImages = async (req: Request , res: Response) => {
+  var myfiles = JSON.parse(JSON.stringify(req.files))
+  
+  let result = await Product.findByPk(req.body.id_product);
 
+    if(myfiles && result) {
+      myfiles.forEach( async (item: Express.Multer.File) =>{
+        
+      const filename = `${item.filename}.jpg`;
+      
+      let newProduct = await Image.create({id_product: req.body.id_product  , name : filename});
+      console.log({id:newProduct.id , id_product: newProduct.id_product, name: newProduct.name});
 
+      await sharp(item.path)
+          .resize(400,600)
+          .toFormat('jpeg')
+          .toFile(`./public/media/${filename}`);
+      
+      await unlink(item.path);
+
+      })
+      res.json(myfiles);
+    } else {
+        res.status(400);
+        res.json({error : 'Arquivo Invalido'});
+    }
 }

@@ -12,14 +12,24 @@ const storageConfig = multer.diskStorage({
   },
 });
 
+// const upload = multer({
+//   fileFilter: (req, file, cb) => {
+//     
+//       cb(null,allowed.includes( file.mimetype ));
+//   },
+//   limits: { fileSize: 4000000 },
+//   storage: storageConfig
+// });
 const upload = multer({
-  fileFilter: (req, file, cb) => {
+  storage: storageConfig,
+  limits: { fileSize: 4000000, files: 10 },//supondo que o máximo seriam 10 arquivos
+  fileFilter: function(req, file, cb) {
     const allowed: string[] = ['image/jpg' , 'image/jpeg' , 'image/png'];
-      cb(null,allowed.includes( file.mimetype ));
-  },
-  limits: { fileSize: 4000000 },
-  storage: storageConfig
-});
+    cb(null,allowed.includes( file.mimetype ));
+  }
+  }).array('images');
+
+// const upload = multer({ dest: './tmp' })
 
 const router = Router();
 
@@ -46,7 +56,9 @@ router.put('/updateproduct', Auth.private ,ProductController.updateProduct);
 
 router.delete('/deleteproduct', Auth.private ,ProductController.deleteProduct);
 
-router.post('/upload', Auth.private , upload.single('images'),  ProductController.uploadImages);
+// router.post('/uploadimage', Auth.private , upload.single('image'),  ProductController.uploadImage);
+
+router.post('/uploadimages', Auth.private , upload,  ProductController.uploadImages);
 
 
 export default router;
