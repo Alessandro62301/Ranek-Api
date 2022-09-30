@@ -58,18 +58,27 @@ export const login = async (req: Request, res: Response) => {
 
 
 export const updateUser = async (req: Request, res: Response) => {
-  let results = await User.findAll({
-    attributes: { exclude: ['password'] },
-    where: {
-      id: 1
-    }
-  });
-  if (results.length > 0) {
-    let user = results[0];
-    user.name = 'Lucas Llalala';
-    await user.save();
-  }
-  console.log("User Updated");
+  let user = await User.findByPk(res.locals.user.id);
+  let { name, email, password, cpf, zipcode, stret, number, district, city, state } = req.body;
 
+
+  if (user) {
+    user.name = name;
+    user.email = email;
+    user.password = password;
+    user.cpf = cpf;
+    user.zipcode = zipcode;
+    user.stret = stret;
+    user.number = number;
+    user.district = district;
+    user.city = city;
+    user.state = state;
+
+    await user.save();
+    res.status(200);
+    res.json({ status: true })
+  }
+  res.status(400);
+  res.json({ status: false })
 }
 
